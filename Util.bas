@@ -25,14 +25,36 @@ Public Function SheetExists(sheetName As String) As Boolean
 End Function
 
 Public Function IsDeckSheet(sheetName As String) As Boolean
-    Dim d As Deck
-    Set d = Factory.CreateDeck(sheetName)
-    IsDeckSheet = d.IsValid
+    ' To speed this up, doing a hack. No need to Parse the worksheet name into a deck object each time this is called.
+    IsDeckSheet = (Sheets(sheetName).Cells(2, 4).Value2 = "Total Games:") And sheetName <> "Template"
+    
+    'Dim d As Deck
+    'Set d = Factory.CreateDeck(sheetName)
+    'IsDeckSheet = d.IsValid
 End Function
 
-Public Function CellToInt(Cell As Range) As Integer
+' Cleans up all potential deck names in place, and returns false if any can't be fixed
+' TODO: Do this more efficiently; part of a larger undertaking to pre-compute all deck names
+Public Function SanitizeDeckNames(names As Range) As Boolean
+    Dim curCell As Range
+    Dim d As Deck
+    
+    SanitizeDeckNames = True
+    
+    For Each curCell In names.Cells
+        Set d = Factory.CreateDeck(curCell.Value2)
+        If d.IsValid Then
+            curCell.Value2 = d.fullName
+        Else
+            SanitizeDeckNames = False
+            Exit For
+        End If
+    Next curCell
+End Function
+
+Public Function CellToInt(cell As Range) As Integer
     On Error GoTo NOT_AN_INTEGER
-    ConvertToInteger = CInt(Cell.Value2)
+    ConvertToInteger = CInt(cell.Value2)
     Exit Function
 NOT_AN_INTEGER:
     ConvertToInteger = 0
