@@ -1,6 +1,7 @@
-This is a VBA spreadsheet I've built to aid in analyzing data from the game Hearthstone. For those unfamiliar, consider it a highly complex version of rock-paper-scissors where players select and customize decks of cards. Win rates depend on the decks selected and the customization performed.
+This is a VBA workbook I've built to aid in analyzing data from the game Hearthstone. For those unfamiliar, consider it a highly complex version of rock-paper-scissors where players select and customize decks of cards. Win rates depend on the decks selected and the customization performed.
 The purpose of the sheet is to aid in deck selection and customization by quickly generating expected win rates in two settings: Ladder (one deck) and Tournament (4 decks). After entering data, users can quickly see how various strategies stack up against the expected opposition.
 
+All that is needed for users is Hearthsheet.xlsm. The .bas and .cls files were exported and committed for source control purposes only.
 
 There are two methods of data entry:
 1. Game logs: User enters the result of each game, the decks that were used, and some info about each player to filter on.
