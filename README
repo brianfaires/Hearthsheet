@@ -1,31 +1,36 @@
-This is a VBA spreadsheet I've built to aid in analyzing data from the game Hearthstone. For those unfamiliar, consider it a highly complex version of rock-paper-scissors.
-The purpose of the sheet is to quickly generate expected win rates in two settings: Ladder and Tournament. After entering data, users can quickly see how a deck or set of decks will perform against alternative strategies.
+This is a VBA spreadsheet I've built to aid in analyzing data from the game Hearthstone. For those unfamiliar, consider it a highly complex version of rock-paper-scissors where players select and customize decks of cards. Win rates depend on the decks selected and the customization performed.
+The purpose of the sheet is to aid in deck selection and customization by quickly generating expected win rates in two settings: Ladder (one deck) and Tournament (4 decks). After entering data, users can quickly see how various strategies stack up against the expected opposition.
+
+
 There are two methods of data entry:
       1. Game logs: User enters the result of each game, the decks that were used, and some info about each player to filter on.
-      2. Prior probabilities: User enters estimated win rates for some or all matchups.
+      2. Prior probabilities: User enters estimated win rates for some or all matchups. This data serves as a starting point, which the game logs build on top of.
+
 There are three sections for analyzing data:
-      1. Deck sheets: A comprehensive overview of each deck, listing the best/worst matchups, all the log data on that deck, and how the deck matches up against the current metagame (the expected distribution of opposing decks).
-      2. Meta sheet: An overview of the metagame. Data is initially pulled from game logs, then modified by the user if desired. The sheet will summarize the given metagame and show each deck's expected win rate.
-      3. Conquest sheet: Game theoretical win rates are constructed for a variety of 4 deck vs 4 deck lineups, using the Conquest with Ban format (players ban one of the opposing decks, and winning decks are excluded from future play). The user can see how any lineup performs against a suite of other lineups, analyze banning options, and see how small modifications to matchups affect the overall win rate.
+      1. Deck sheets: A comprehensive overview of each deck, listing the best/worst matchups, all the prior and log data on that deck, and how the deck matches up against the current metagame (the expected distribution of opposing decks).
+      2. Meta sheet: Tools for defining the current metagame and seeing how each deck is expected to perform within it.
+      3. Conquest sheet: Game theoretical win rates are constructed for 4 deck vs 4 deck lineups, using the Conquest with Ban format (players ban one of the opposing decks, and winning decks are excluded from future play). The user can see how any lineup performs against a suite of other lineups, analyze banning options, and see how small modifications to matchups affect the overall win rate.
+
 
 Known bugs:
-• Conditional formatting sometimes screws up due to a bug in Excel 2010 with large workbooks. If formatting looks weird after doing an update, add and remove a conditional format to any cell. This will update all conditional formats and fix the broken ones.  This may require temporarily unprotecting a sheet.
+• Conditional formatting sometimes screws up due to a bug in Excel 2010 with large workbooks. If formatting looks weird after doing an update, add and remove a conditional format in any cell. This will update all conditional formats in the workbook and fix the broken ones.  This may require temporarily unprotecting a sheet.
+
 
 Instructions:
 Orange cells are instructions. Purple cells are user-editable. Everything else is locked to prevent accidental editing, but there are no passwords on the locks.
 
-The high-level workflow is:
-1.	List all decks on the Log tab.  Update occasionally as new decks crop up and others become irrelevant.
-2.	Input VS win rates on Priors tab.  Update occasionally.
-3.	Log games on Log tab as they happen, or copy/paste an export from your deck tracking software.
+The high-level use case is:
+1.	List all decks on the Log tab. Update occasionally as new decks crop up and others become irrelevant.
+2.	Input VS win rates on Priors tab. Update as needed.
+3.	Log games on Log tab as they happen, or copy/paste data exported from your Hearthstone tracking software.
 4.	When ready to analyze data, press the big button on the Log tab. This will generate a sheet for each deck.
 6.	Use the Meta sheet to analyze a given metagame and see each deck's expected win rate in the given meta. Two flavors: 
       Log-based meta: Generates meta based on your logs. Use settings to filter for legend only games, a given date range, etc.
       Manual meta: You manually enter the number of each deck. (Useful when anticipating a meta or for tourney prep, e.g. to see which decks are best in a "shaman-less" world)
 7.	Experiment with conquest lineups and banning on the Conquest tab.
 
-Breakdown of each sheet:
 
+Breakdown of each sheet:
 Log
 The place you log games, and some high-level config stuff that can usually be ignored.
 •	Logs are straightforward, just add them.
@@ -65,12 +70,15 @@ One of these is generated for each deck (based on config in the Log tab).  They 
 •	All win rates versus decks in the current meta (from Meta tab)
 • The "Recalculate" button is a remnant from when things didn't update properly. Hopefully it's unnecessary now but feel free to click it at any point.
 
+
 Future enhancements:
 • Import VS data into Priors table
 • Import logs from deck trackers (not really necessary since copy/paste is allowed)
 • Track legend rank
 • Sort meta by time of day
 • Progress bar on long computations
+• Add weights and overall win rate to conquest lineup table
+• Add a true win rates table (Priors + game data), show differences from priors table
 • Make illogical win rates work with Conquest by always looking up DeckB win rates as 1 - (column first value)
 
 Code notes:
