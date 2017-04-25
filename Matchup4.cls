@@ -69,7 +69,7 @@ Public Function TakeMaxMinBans() As Matchup3
         curMin = 1
         ' Assuming A bans deck(i), find the minimum match win rate
         For j = 1 To 4
-            If winRates(i, j) < curMin Then curMin = winRates(i, j)
+            If banWinRates(i, j) <= curMin Then curMin = banWinRates(j, i)
         Next j
         minWinRate(i) = curMin
     Next i
@@ -88,7 +88,7 @@ Public Function TakeMaxMinBans() As Matchup3
         curMin = 0
         'Assuming B bans deck(i), find the minimum match win rate
         For j = 1 To 4
-            If winRates(j, i) > curMin Then curMin = winRates(i, j)
+            If banWinRates(j, i) >= curMin Then curMin = banWinRates(i, j)
         Next j
         minWinRate(i) = curMin
     Next i
