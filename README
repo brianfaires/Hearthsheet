@@ -3,71 +3,71 @@ The purpose of the sheet is to aid in deck selection and customization by quickl
 
 
 There are two methods of data entry:
-      1. Game logs: User enters the result of each game, the decks that were used, and some info about each player to filter on.
-      2. Prior probabilities: User enters estimated win rates for some or all matchups. This data serves as a starting point, which the game logs build on top of.
+1. Game logs: User enters the result of each game, the decks that were used, and some info about each player to filter on.
+2. Prior probabilities: User enters estimated win rates for some or all matchups. This data serves as a starting point, which the game logs build on top of.
 
 There are three sections for analyzing data:
-      1. Deck sheets: A comprehensive overview of each deck, listing the best/worst matchups, all the prior and log data on that deck, and how the deck matches up against the current metagame (the expected distribution of opposing decks).
-      2. Meta sheet: Tools for defining the current metagame and seeing how each deck is expected to perform within it.
-      3. Conquest sheet: Game theoretical win rates are constructed for 4 deck vs 4 deck lineups, using the Conquest with Ban format (players ban one of the opposing decks, and winning decks are excluded from future play). The user can see how any lineup performs against a suite of other lineups, analyze banning options, and see how small modifications to matchups affect the overall win rate.
+1. Deck sheets: A comprehensive overview of each deck, listing the best/worst matchups, all the prior and log data on that deck, and how the deck matches up against the current metagame (the expected distribution of opposing decks).
+2. Meta sheet: Tools for defining the current metagame and seeing how each deck is expected to perform within it.
+3. Conquest sheet: Game theoretical win rates are constructed for 4 deck vs 4 deck lineups, using the Conquest with Ban format (players ban one of the opposing decks, and winning decks are excluded from future play). The user can see how any lineup performs against a suite of other lineups, analyze banning options, and see how small modifications to matchups affect the overall win rate.
 
 
 Known bugs:
-• Conditional formatting sometimes screws up due to a bug in Excel 2010 with large workbooks. If formatting looks weird after doing an update, add and remove a conditional format in any cell. This will update all conditional formats in the workbook and fix the broken ones.  This may require temporarily unprotecting a sheet.
+• Conditional formatting sometimes screws up due to a bug in Excel 2010 with large workbooks. If formatting looks weird after doing an update, add and remove a conditional format in any cell. This will update all conditional formats in the workbook and fix the broken ones. This may require temporarily unprotecting a sheet.
 
 
 Instructions:
 Orange cells are instructions. Purple cells are user-editable. Everything else is locked to prevent accidental editing, but there are no passwords on the locks.
 
 The high-level use case is:
-1.	List all decks on the Log tab. Update occasionally as new decks crop up and others become irrelevant.
-2.	Input VS win rates on Priors tab. Update as needed.
-3.	Log games on Log tab as they happen, or copy/paste data exported from your Hearthstone tracking software.
-4.	When ready to analyze data, press the big button on the Log tab. This will generate a sheet for each deck.
-6.	Use the Meta sheet to analyze a given metagame and see each deck's expected win rate in the given meta. Two flavors: 
-      Log-based meta: Generates meta based on your logs. Use settings to filter for legend only games, a given date range, etc.
-      Manual meta: You manually enter the number of each deck. (Useful when anticipating a meta or for tourney prep, e.g. to see which decks are best in a "shaman-less" world)
-7.	Experiment with conquest lineups and banning on the Conquest tab.
+1. List all decks on the Log tab. Update occasionally as new decks crop up and others become irrelevant.
+2. Input estimated win rates on Priors tab (copying from VS data reaper report is encouraged). Update as desired.
+3. Log games on Log tab as they happen, or copy/paste data exported from your Hearthstone tracking software.
+4. When ready to analyze data, press the big button on the Log tab. This will generate a sheet for each deck.
+6. Use the Meta sheet to analyze a given metagame and see each deck's expected win rate in the given meta. Two flavors: 
+      • Log-based meta: Generates meta based on your logs. Use settings to filter for legend only games, a given date range, etc.
+      • Manual meta: You manually enter the number of each deck. (Useful when anticipating a meta or for tourney prep, e.g. to see which decks are best in a "shaman-less" world)
+7. Experiment with conquest lineups and banning on the Conquest tab.
 
 
 Breakdown of each sheet:
 Log
 The place you log games, and some high-level config stuff that can usually be ignored.
-•	Logs are straightforward, just add them.
-•	List decks in the table on the right.  This is the master list of decks, and some copies of it are on other tabs.  Update it here, and the others will update automatically.
-•	When you press the big button, there will be a delay, and the Meta tab will be opened when everything is done.  Press Escape to abort or debug.  Afterward, a deck sheet is generated for each deck.  They’ll be sorted according to the number of games logged.
-•	The config sections are used to limit how deck sheets are created/colored, and to specify which games from the log should be ignored.
+• Logs are straightforward, just add them.
+• List decks in the table on the right. This is the master list of decks, and some copies of it are on other tabs. Update it here, and the others will update automatically.
+• When you press the big button, there will be a delay, and the Meta tab will be opened when everything is done. Press Escape to abort or debug. Afterward, a deck sheet is generated for each deck. They’ll be sorted according to the number of games logged.
+• The config sections are used to limit how deck sheets are created/colored, and to specify which games from the log should be ignored.
 • Adding a note of "repeat" (case insensitive) to a game will cause the game to be ignored in meta calculations. It will still be considered in deck win rate calculations. This is meant to avoid the meta numbers from being distorted due to requeues.
 
 Priors
-Enter win rates that aren’t based on your own data.  (e.g. copy win rates straight from Vicious Syndicate.) These act as a starting point for computing true win rates, and as more data is gathered, these rates matter less. IMO, it's good practice to update these every couple weeks and possibly get rid of your old data.
-•	Empty cells means the win rates are entirely determined by games played. If no games have been played, they will be assumed to be 50-50 matchups.
-•	The win rate in each cell applies to the deck listed on the same row, when playing against the deck listed in the column.
-•	It’s always safe to hit the Cleanup button.  You should do this after adding/removing decks on the Log tab, because it will resize the table accordingly and check it for errors, and auto-populate any win rate it can (e.g. if you specify Deck A vs B is 55%, it will fill in 45% for B vs A).
-• It will tell you about errors, but will continue to generate data based on whatever is in the table. So if you feel you have an edge in the freeze mage mirror, feel free to enter .55 for that matchup.
+Enter win rates that aren’t based on your own data. (e.g. copy win rates straight from Vicious Syndicate.) These act as a starting point for computing true win rates, and as more data is gathered, these rates matter less. IMO, it's good practice to update these every couple weeks and possibly get rid of your old log data, merging it into your new priors.
+• Empty cells means the win rates are entirely determined by games played. This can lead to extreme win rates if not many games have been played. If no games have been played and no prior is specified, matchups will be assumed to be 50-50.
+• The win rate in each cell applies to the deck listed on the same row, when playing against the deck listed in the column.
+• It’s always safe to hit the Cleanup button.  You should do this after adding/removing decks on the Log tab, because it will resize the table accordingly and check it for errors, and auto-populate any win rate it can (e.g. if you specify Deck A vs B is 55%, it will fill in 45% for B vs A).
+• It will tell you about errors, but will continue to generate data based on whatever is in the table. So if you think you have an edge in the freeze mage mirror, feel free to enter .55 for that matchup.
 
 Meta
-Used to see which decks are best against a given meta.  You can manually edit the values in B12:S17 to construct a custom meta, or you can pull the most recent games from the Log tab to see the meta you’ve been playing against on ladder.  In either case, a button press is required to load the appropriate data, update win rates on each deck sheet, and list the best meta decks.  Data on this sheet is:
-•	Raw counts of each deck
-•	Percent of total meta for each deck
-•	Percent of total meta for each class
-•	All decks sorted by frequency
-•	A list of which decks will perform best in the specified meta, based on win rates from deck sheets
+Used to see which decks are best against a given meta.  You can manually edit the values in B12:S17 to construct a custom meta, or you can pull the most recent games from the Log tab to see the meta you’ve been playing against on ladder. In either case, a button press is required to load the appropriate data, update win rates on each deck sheet, and list the best meta decks. Data on this sheet is:
+• Raw counts of each deck
+• Percent of total meta for each deck
+• Percent of total meta for each class
+• All decks sorted by frequency
+• A list of which decks will perform best in the specified meta, based on win rates from deck sheets
 
 Conquest
-Used to compare different conquest lineups, and calculate the optimal strategy (i.e. unexploitable) for picking decks.  Each strategy is ‘mixed’, so you would randomly pick each deck with probability equal to the values listed.  (e.g. “.3, .2, .5” means pick Deck A 30% of the time, Deck B 20%, and Deck C half the time.)  Usually you will fill in your lineup at the top of the table, then list several opponent lineups, then click Process All Matchups.
-You can play around with a specific 3v3 matchup to see how changing decks or win rates will affect the overall win rate.  List the decks, click “Pull Win Rates” to load the rates, then click “Process Matchup” to do the game theory calculations for the given win rates. You are free to edit the win rates and click "Process Matchup" again.
+Used to compare different conquest lineups, and calculate the optimal strategy (i.e. unexploitable) for picking decks. These are mixed strategies, so you would randomly pick each deck with probability equal to the values listed. (e.g. “.3, .2, .5” means pick Deck A 30% of the time, Deck B 20%, and Deck C 50%.) Usually you will fill in your lineup at the top of the table, then list several opponent lineups, then click Process All Matchups.
+You can play around with a specific 3v3 matchup to see how changing decks or win rates will affect the overall win rate. List the decks, click “Pull Win Rates” to load the rates, then click “Process Matchup” to do the game theory calculations for the given win rates. You are free to edit the win rates and click "Process Matchup" again.
 The banning section shows the effects of each player's ban on a 4v4 matchup. All 16 possibilities are shown, and the worst case outcome is called out. The table is repeated with different indexing but the same data.
 
 Deck Sheets
-One of these is generated for each deck (based on config in the Log tab).  They are essentially read-only.  The color of the tab is based on how many games have been logged with that deck (red/yellow sheets have fewer games and might not be significant). Each deck sheet shows:
-•	Total number of games logged with this deck
-•	Expected win rate in the meta currently configured on the Meta tab
-•	A raw win/loss count vs each other deck
-•	The default win rate for each matchup, pulled from the Priors tab
-•	An expected win rate vs each other deck.  This is done by merging the default win rate with the wins/losses that have been logged.  Config in cell N12.
-•	Best matchups, sorted by win rate
-•	All win rates versus decks in the current meta (from Meta tab)
+One of these is generated for each deck (based on config in the Log tab). They are essentially read-only. The color of the tab is based on how many games have been logged with that deck (red/yellow sheets have fewer games and might not be significant). Each deck sheet shows:
+• Total number of games logged with this deck
+• Expected win rate in the meta currently configured on the Meta tab
+• A raw win/loss count vs each other deck
+• The default win rate for each matchup, pulled from the Priors tab
+• An expected win rate vs each other deck.  This is done by merging the default win rate with the wins/losses that have been logged.  How heavily to weight the default win rate is configurable in cell N12.
+• Best matchups, sorted by win rate
+• All win rates versus decks in the current meta (as defined in the Meta tab)
 • The "Recalculate" button is a remnant from when things didn't update properly. Hopefully it's unnecessary now but feel free to click it at any point.
 
 
