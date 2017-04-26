@@ -131,10 +131,10 @@ Public Function GetWinRateVs(opp As Deck) As Double
     Else
         ' Pull win rate from Priors sheet
         Dim cellVal As String
-        cellVal = Round(Sheets("Priors").Range("AllPriors").Cells(AbsoluteOffset, opp.AbsoluteOffset).Value2, 3)
+        cellVal = Round(Priors.Range("AllPriors").Cells(AbsoluteOffset, opp.AbsoluteOffset).Value2, 3)
         If cellVal = "" Then
             ' Check other half of Priors table
-            cellVal = Round(1 - Sheets("Priors").Range("AllPriors").Cells(opp.AbsoluteOffset, AbsoluteOffset).Value2, 3)
+            cellVal = Round(1 - Priors.Range("AllPriors").Cells(opp.AbsoluteOffset, AbsoluteOffset).Value2, 3)
             If cellVal = "" Then
                 GetWinRateVs = 0.5
             Else

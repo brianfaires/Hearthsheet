@@ -68,7 +68,7 @@ Public Function RunThroughConquestSheet()
         Next
     End With
     
-    Application.Calculate
+    ConquestHidden.Calculate
     PullResults
 End Function
 

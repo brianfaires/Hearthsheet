@@ -82,7 +82,3 @@ Future enhancements:
 • Add a true win rates table (Priors + game data), show differences from priors table
 • Make illogical win rates work with Conquest by always looking up DeckB win rates as 1 - (column first value)
 
-Code notes:
-• StatusBar on/off syntax
-• Remove all sheets(“”) references
-• Switch black tabs back to RGB() instead of vbBlack

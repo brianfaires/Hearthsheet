@@ -216,9 +216,9 @@ End Function
 '            For classOffset = 0 To 8
 '                For deckOffset = 0 To 5
 '                    sourceCol = 4 + 6 * classOffset + deckOffset
-'                    If sheets("Priors").Cells(3, sourceCol) <> "" Then
+'                    If Priors.Cells(3, sourceCol) <> "" Then
 '                        defaultRate = 0.5
-'                        priorValue = sheets("Priors").Cells(sourceRow, sourceCol)
+'                        priorValue = Priors.Cells(sourceRow, sourceCol)
 '                        If priorValue <> "" Then defaultRate = CDbl(priorValue)
 '
 '                        sht.Cells(14 + deckOffset, 12 + 2 * classOffset) = defaultRate
@@ -267,6 +267,7 @@ Public Function ComputeBestMatchups(sheet As Worksheet)
     i = 1
     curMax = 1#
     
+    ' TODO: Speed this up by reading the whole range ahead of time, then writing it all at once
     While i <= numDecks
         nextMax = 0#
         For Each curCell In metaNames
