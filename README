@@ -85,3 +85,4 @@ Future enhancements:
 Code notes:
 • StatusBar on/off syntax
 • Remove all sheets(“”) references
+• Switch black tabs back to RGB() instead of vbBlack
