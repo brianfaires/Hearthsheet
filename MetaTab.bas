@@ -31,7 +31,12 @@ Public Function LoadMetaFromLogs()
     
     LoadMetaSettings
     
+    
     With Meta.Range("WeightTable")
+        ' Clear old color coding
+        ' TODO: this will overwrite past red cells, and only the ones encountered will be marked.
+        Log.Range("AllLogs").Interior.ColorIndex = xlNone
+        
         For Each curRow In Log.Range("AllLogs").Rows
             If curRow.Cells(LogCfgCol_Date) = "" Then
                 Exit For
