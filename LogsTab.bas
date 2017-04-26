@@ -170,7 +170,7 @@ Public Function CleanUpDeckSheets()
             ElseIf gameCount < minGamesBlack Then
                 curSheet.Tab.Color = vbYellow
             Else
-                curSheet.Tab.Color = vbWhite
+                curSheet.Tab.Color = vbBlack
             End If
         End If
         
