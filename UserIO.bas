@@ -9,6 +9,7 @@ Sub Click_ProcessLogs()
     Application.StatusBar = False
     Application.Calculation = xlCalculationManual
     
+    On Error GoTo Cleanup
     ReadSettings
     SetProtectionAllDeckSheets False
     ClearDeckSheetGames
@@ -19,14 +20,15 @@ Sub Click_ProcessLogs()
     Application.Calculation = xlCalculationAutomatic
     CleanUpDeckSheets
     SetProtectionAllDeckSheets True
-    
-    ' Restore visibility/calculation settings
-    Sheets("Meta").Select
-    Application.StatusBar = True
-    Application.ScreenUpdating = True
+
+Cleanup:
+        ' Restore visibility/calculation settings
+        Sheets("Meta").Select
+        Application.StatusBar = True
+        Application.ScreenUpdating = True
 End Sub
 
-' This is fired when the user changes the number of games at the default win rate. This will change the win rates and best matchups.
+' This is fired when the user changes the weight of the default win rate. This will change the win rates and best matchups.
 ' This fires when the user clicks the "Recompute" button on each deck sheet.
 ' TODO: Should this also fire when the user edits win/loss counts on deck sheets?
 Sub RecalculateBestMatchupsForCurrentSheet()
@@ -37,8 +39,11 @@ Sub RecalculateBestMatchupsForCurrentSheet()
         Application.Calculation = xlCalculationManual
         ActiveSheet.Unprotect
         
+        On Error GoTo Cleanup
+        
         ComputeBestMatchups ActiveSheet.Name
         
+Cleanup:
         ' Restore visibility/calculation settings
         ActiveSheet.Protect
         Application.Calculation = xlCalculationAutomatic
@@ -57,6 +62,7 @@ Sub Click_CleanUpPriors()
     Application.StatusBar = False
     Application.Calculation = xlCalculationManual
     sht.Unprotect
+    On Error GoTo Cleanup
     
     'Adjust hidden columns
     SetPriorVisibility
@@ -69,6 +75,7 @@ Sub Click_CleanUpPriors()
 
     DisplayPriorErrors errorsFound
     
+Cleanup:
     ' Restore visibility/calculation settings
     sht.Protect
     Application.Calculation = xlCalculationAutomatic
@@ -83,6 +90,7 @@ Public Sub Click_UpdateMetaFromLogs()
     Application.ScreenUpdating = False
     Application.StatusBar = False
     Meta.Unprotect
+    On Error GoTo Cleanup
     SetProtectionAllDeckSheets False
     
     ClearMetaData
@@ -93,6 +101,7 @@ Public Sub Click_UpdateMetaFromLogs()
     UpdateAllBestMatchups
     UpdateBestMetaDecks
     
+Cleanup:
     ' Restore visibility/calculation settings
     SetProtectionAllDeckSheets True
     Meta.Protect
@@ -110,12 +119,14 @@ Public Sub Click_UpdateMetaFromMetaSheet()
     Application.StatusBar = False
     shtMeta.Unprotect
     SetProtectionAllDeckSheets False
+    On Error GoTo Cleanup
     
     UpdateMostPlayedClasses
     UpdateMostPlayedDecks
     UpdateAllBestMatchups
     UpdateBestMetaDecks
     
+Cleanup:
     ' Restore visibility/calculation settings
     SetProtectionAllDeckSheets True
     shtMeta.Protect
@@ -152,6 +163,7 @@ Public Sub Click_ProcessAllConquestLineups()
     Application.Calculation = xlCalculationManual
     Application.StatusBar = False
     sht.Unprotect
+    On Error GoTo Cleanup
     
     ' Clear current results
     sht.Range("AllOppLineupData").Value2 = ""
@@ -210,6 +222,7 @@ Public Sub Click_ProcessAllConquestLineups()
         End If
     Next i
     
+Cleanup:
     ' Restore visibility/calculation settings
     sht.Protect
     Application.Calculation = xlCalculationAutomatic
@@ -223,6 +236,7 @@ Public Sub Click_PullWinRates()
     Application.ScreenUpdating = False
     Application.StatusBar = False
     Application.Calculation = xlCalculationManual
+    On Error GoTo Cleanup
     
     Dim sht As Worksheet
     Set sht = Sheets("Conquest")
@@ -245,6 +259,7 @@ Public Sub Click_PullWinRates()
         Next j
     Next i
     
+Cleanup:
     ' Restore visibility/calculation settings
     Application.Calculation = xlCalculationAutomatic
     Application.StatusBar = True
@@ -257,6 +272,7 @@ Public Sub Click_ProcessMatchup()
     Application.ScreenUpdating = False
     Application.StatusBar = False
     Application.Calculation = xlCalculationManual
+    On Error GoTo Cleanup
     Sheets("Conquest").Unprotect
     
     Dim match As Matchup3
@@ -266,6 +282,8 @@ Public Sub Click_ProcessMatchup()
     match.OutputConquestResults Conquest.Range("M3_WinRate")
 
     ' Restore visibility/calculation settings
+Cleanup:
+    On Error Resume Next
     Sheets("Conquest").Protect
     Application.Calculation = xlCalculationAutomatic
     Application.StatusBar = True
@@ -278,6 +296,7 @@ Public Sub Click_ComputeBans()
     Application.ScreenUpdating = False
     Application.StatusBar = False
     'Application.Calculation = xlCalculationManual
+    On Error GoTo Cleanup
     Sheets("Conquest").Unprotect
     
     Dim sht As Worksheet
@@ -314,7 +333,9 @@ Public Sub Click_ComputeBans()
         Next j
     Next i
     
+Cleanup:
     ' Restore visibility/calculation settings
+    On Error Resume Next
     Sheets("Conquest").Protect
     'Application.Calculation = xlCalculationAutomatic
     Application.StatusBar = True
