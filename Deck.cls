@@ -141,7 +141,7 @@ Public Function GetWinRateVs(opp As Deck) As Double
                 GetWinRateVs = CDbl(cellVal)
             End If
         Else
-            GetWinRateVs = 0.5
+            GetWinRateVs = CDbl(cellVal)
         End If
     End If
 End Function
